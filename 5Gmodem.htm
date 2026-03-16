@@ -1,0 +1,137 @@
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5G Modem Manager</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #loadingMessage {
+      margin-bottom: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: white;
+      z-index: 10;
+    }
+
+    #embeddedPageContainer {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #embeddedPage {
+      width: 100%;
+      height: 100vh;
+      border: none;
+      transform: translateY(-570px);
+    }
+    footer {
+        font-size: .0rem;
+        overflow: hidden;
+        padding: .0rem 0 !important;
+        text-align: right;
+        white-space: nowrap;
+        color: #aaa;
+        visibility: hidden;
+        height: 0px !important;
+    }
+    header .fill {
+        padding: .0rem 0 !important;
+        border-bottom: 0 solid rgba(255,255,255,0.08) !important;
+        display: flex;
+        height: 0px !important;
+    }
+    .main-right > #maincontent > .container {
+        margin: 0 !important;
+        flex-grow: 1;
+    }
+    /* Force override existing styles using !important for priority */
+    .container {
+      width: 100% !important;
+      max-width: none !important; /* Remove max-width limit */
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      zoom: normal !important; /* Remove zoom */
+      padding: 0 15px; /* Optional: add padding to prevent content from touching edges */
+      box-sizing: border-box !important; /* Ensure padding does not affect width */
+    }
+  </style>
+</head>
+<body>
+  <div id="loadingMessage">Loading API...</div>
+  <div id="embeddedPageContainer">
+    <iframe id="embeddedPage" src="" onload="showHalfPage()"></iframe>
+  </div>
+  <script>
+    function showHalfPage() {
+      document.getElementById('loadingMessage').style.display = 'none';
+      var embeddedPage = document.getElementById('embeddedPage');
+      embeddedPage.style.transform = 'translateY(0)';
+    }
+
+    function modemserver() {
+      // Get current page URL and construct target URL
+      const currentUrl = window.location.href; // Get current full URL (e.g. http://192.168.1.100:80/xxx)
+      const urlObj = new URL(currentUrl); // Parse URL into object for easy manipulation
+      // Construct target URL: protocol + hostname + :8080 + timestamp (prevent caching)
+      // Example: current URL is http://192.168.1.100, result is http://192.168.1.100:8080
+      const targetSrc = `http://${urlObj.hostname}:8080`;
+      // Set iframe src
+      document.getElementById('embeddedPage').src = targetSrc;
+
+    }
+    function loadTargetUrl() {
+      try {
+        // Get current page URL info
+        const currentUrl = new URL(window.location.href);
+        // Construct target URL (protocol + hostname + :8080 + timestamp to prevent caching)
+        const targetUrl = `http://${currentUrl.hostname}:8080?timestamp=${Date.now()}`;
+
+        // Navigate to target URL
+        window.location.href = targetUrl;
+      } catch (error) {
+        document.getElementById('loadingMessage').textContent = 'Load failed, please refresh and try again';
+        console.error('URL load error:', error);
+      }
+    }
+    function openNewPage() {
+      try {
+        // Get current page URL info
+        const currentUrl = new URL(window.location.href);
+        // Construct target URL (protocol + hostname + :8080 + timestamp to prevent caching)
+        const targetUrl = `http://${currentUrl.hostname}:8080?timestamp=${Date.now()}`;
+
+        // Open target URL in new tab
+        const newWindow = window.open(targetUrl, '_blank');
+
+        // Check if blocked by browser popup blocker
+        if (!newWindow) {
+          document.getElementById('loadingMessage').textContent = 'Open failed! Please allow popups and try again';
+          document.getElementById('loadingMessage').classList.add('error');
+        } else {
+          // Optional: close current page after opening new window
+          // window.close();
+        }
+      } catch (error) {
+        document.getElementById('loadingMessage').textContent = 'Load failed, please refresh and try again';
+        document.getElementById('loadingMessage').classList.add('error');
+        console.error('Open new page error:', error);
+      }
+    }
+
+
+    window.onload = modemserver;
+  </script>
+</body>
