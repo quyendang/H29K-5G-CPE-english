@@ -9,6 +9,8 @@ This repository contains the OpenWrt integration files and English-patched `mode
 The stock `modemserver` binary ships with a Chinese-language Vite/React web UI. This project patches all embedded Chinese strings to English and wires the UI into OpenWrt's LuCI admin panel.
 
 > **Buy the H29K device:** [Taobao listing](https://item.taobao.com/item.htm?id=896391872170)
+>
+> **Download firmware:** [v1.0.0 Release — OP-H29K-NEW-UI-20251029.img](https://github.com/quyendang/H29K-5G-CPE-english/releases/tag/v1.0.0)
 
 ![Signal & Network dashboard showing live 5G signal stats, traffic counters, and cell parameters in English](screenshot.png)
 
