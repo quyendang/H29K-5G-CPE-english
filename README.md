@@ -1,8 +1,14 @@
 # H29K 5G CPE — English UI
 
+<p align="center">
+  <img src="device.avif" alt="H29K 5G CPE device" width="340" />
+</p>
+
 This repository contains the OpenWrt integration files and English-patched `modemserver` binary for the **H29K 5G CPE** (Customer Premises Equipment) router.
 
 The stock `modemserver` binary ships with a Chinese-language Vite/React web UI. This project patches all embedded Chinese strings to English and wires the UI into OpenWrt's LuCI admin panel.
+
+> **Buy the H29K device:** [Taobao listing](https://item.taobao.com/item.htm?id=896391872170)
 
 ![Signal & Network dashboard showing live 5G signal stats, traffic counters, and cell parameters in English](screenshot.png)
 
