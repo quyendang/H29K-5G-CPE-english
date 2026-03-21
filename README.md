@@ -39,8 +39,9 @@ Copy each file to the correct path on the router via `scp` or a USB drive.
 ### 1. Deploy the English modemserver binary
 
 ```sh
+ssh root@192.168.1.1 "service modemserver stop"
 scp modemserver_en root@192.168.1.1:/usr/bin/modemserver
-ssh root@192.168.1.1 "chmod +x /usr/bin/modemserver && /etc/init.d/modemserver restart"
+ssh root@192.168.1.1 "chmod +x /usr/bin/modemserver && service modemserver start"
 ```
 
 ### 2. Deploy LuCI controller
